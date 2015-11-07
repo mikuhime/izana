@@ -22,13 +22,15 @@ var client = new irc.Client(conf['connection']['server'], conf['bot']['nick'], {
   channels: conf['connection']['channels']
 });
 
-// treten
+/*
+  treten
+*/
 var treten = true;
 
 client.addListener('action', function (from, to, text, message) {
   getreten = text.match(/tritt (\S*)\s*$/)
   if (getreten && treten) {
-    client.action(from, getreten[0])
+    client.action(to, getreten[0])
     treten = false
 
     r = (Math.random() * 300)+30
