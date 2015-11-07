@@ -20,7 +20,7 @@ var client = new irc.Client(conf['connection']['server'], conf['bot']['nick'], {
   realName: conf['bot']['realname'],
   port: conf['connection']['port'],
   channels: conf['connection']['channels']
-})
+});
 
 // treten
 var treten = true;
