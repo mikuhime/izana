@@ -1,0 +1,22 @@
+{
+  "name": "izana",
+  "version": "0.1.0",
+  "description": "izana irc bot",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mikuhime/izana.git"
+  },
+  "author": "miku@miku.io",
+  "license": "Public Domain",
+  "bugs": {
+    "url": "https://github.com/mikuhime/izana/issues"
+  },
+  "homepage": "https://github.com/mikuhime/izana#readme",
+  "dependencies": {
+    "irc": "^0.4.0",
+    "js-yaml": "^3.4.3"
+  }
+}
