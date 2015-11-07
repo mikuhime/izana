@@ -24,9 +24,11 @@ client.addListener('action', function (from, to, text, message) {
   if (getreten && treten) {
     client.action(from, getreten[0])
     treten = false
+
+    r = (Math.random() * 300)+30
+    setInterval(function(){
+      treten = true;
+      clearInterval(this);
+    }, r*1000)
   }
 });
-
-setInterval(function(){
-  treten = true;
-}, 3*60*1000)
