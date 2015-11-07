@@ -1,13 +1,19 @@
-fs    = require('fs');
-irc   = require('irc');
-yaml  = require('js-yaml');
+bunyan = require('bunyan');
+fs     = require('fs');
+irc    = require('irc');
+yaml   = require('js-yaml');
+
+var log = bunyan.createLogger({name: "myapp"});
 
 try {
   var conf = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
-  console.log(conf);
+  log.info(conf);
 } catch (e) {
-  console.log(e);
+  log.info(e);
+  process.exit(1);
 }
+
+log.level(conf['loglevel']);
 
 var client = new irc.Client(conf['connection']['server'], conf['bot']['nick'], {
   userName: conf['bot']['username'],
