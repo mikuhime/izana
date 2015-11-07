@@ -20,8 +20,7 @@ var client = new irc.Client(conf['connection']['server'], conf['bot']['nick'], {
 var treten = true;
 
 client.addListener('action', function (from, to, text, message) {
-  var tritt = /tritt (\S*)$/
-  getreten = text.match(tritt)
+  getreten = text.match(/tritt (\S*)\s*$/)
   if (getreten && treten) {
     client.action(from, getreten[0])
     treten = false
