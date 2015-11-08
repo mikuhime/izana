@@ -1,7 +1,8 @@
-bunyan = require('bunyan');
-fs     = require('fs');
-irc    = require('irc');
-yaml   = require('js-yaml');
+bunyan  = require('bunyan');
+fs      = require('fs');
+irc     = require('irc');
+twitter = require('twit');
+yaml    = require('js-yaml');
 
 var log = bunyan.createLogger({name: "myapp"});
 
@@ -23,6 +24,25 @@ var client = new irc.Client(conf['connection']['server'], conf['bot']['nick'], {
 });
 
 /*
+ twitter
+*/
+var anrainerkot = new twitter({
+  access_token: conf['anrainerkot']['access_token'],
+  access_token_secret: conf['anrainerkot']['access_token_secret'],
+  consumer_key: conf['anrainerkot']['consumer_key'],
+  consumer_secret: conf['anrainerkot']['consumer_secret']
+});
+
+function commandAnrainerkot(from, to, text, message, args) {
+  anrainerkot.post('statuses/update', {status: args},  function(error, tweet, response){
+    if(error) {
+      log.debug(error)
+      throw error;
+    }
+  });
+}
+
+/*
   prefix commands
 */
 function commandPing(from, to, text, message, args) {
@@ -38,7 +58,7 @@ var commands = {
 var prefix = conf['prefix'];
 
 client.addListener('message', function(from, to, text, message){
-  var cmdreg = new RegExp("(\\" + prefix + ')(\\w+)((\\s\\w+)*)');
+  var cmdreg = new RegExp("(\\" + prefix + ')(\\w+)((\\s+\\w+)*)');
   parsedCommand = cmdreg.exec(text);
   if (parsedCommand && parsedCommand[1] === prefix && (parsedCommand[2] in commands)) {
     log.debug('Executing command ' + parsedCommand[2])
