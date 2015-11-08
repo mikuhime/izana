@@ -31,20 +31,21 @@ function commandPing(from, to, text, message, args) {
 };
 
 var commands = {
+  'anrainerkot': commandAnrainerkot,
   'ping': commandPing
 };
 
 var prefix = conf['prefix'];
 
-for (command in commands) {
-  client.addListener('message', function(from, to, text, message){
-    var cmdreg = new RegExp("(\\" + prefix + ')(\\w+)((\\s\\w+)*)');
-    parsedCommand = cmdreg.exec(text);
-    if (parsedCommand && parsedCommand[1] === prefix && parsedCommand[2] === command ) {
-      commands[command](from, to, text, message, parsedCommand[3]);
-    }
-  });
-}
+client.addListener('message', function(from, to, text, message){
+  var cmdreg = new RegExp("(\\" + prefix + ')(\\w+)((\\s\\w+)*)');
+  parsedCommand = cmdreg.exec(text);
+  if (parsedCommand && parsedCommand[1] === prefix && (parsedCommand[2] in commands)) {
+    log.debug('Executing command ' + parsedCommand[2])
+    commands[parsedCommand[2]](from, to, text, message, parsedCommand[3]);
+  }
+});
+
 
 /*
   treten
