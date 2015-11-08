@@ -23,6 +23,30 @@ var client = new irc.Client(conf['connection']['server'], conf['bot']['nick'], {
 });
 
 /*
+  prefix commands
+*/
+function commandPing(from, to, text, message, args) {
+  log.debug(args)
+  client.say(to, 'pong')
+};
+
+var commands = {
+  'ping': commandPing
+};
+
+var prefix = conf['prefix'];
+
+for (command in commands) {
+  client.addListener('message', function(from, to, text, message){
+    var cmdreg = new RegExp("(\\" + prefix + ')(\\w+)((\\s\\w+)*)');
+    parsedCommand = cmdreg.exec(text);
+    if (parsedCommand && parsedCommand[1] === prefix && parsedCommand[2] === command ) {
+      commands[command](from, to, text, message, parsedCommand[3]);
+    }
+  });
+}
+
+/*
   treten
 */
 var treten = true;
