@@ -39,7 +39,6 @@ var anrainerkot = new twitter({
 });
 
 function commandAnrainerkot(from, to, text, message, args) {
-  log.info(args)
   anrainerkot.post('statuses/update', {status: args},  function(error, tweet, response){
     if(error) {
       izanaError("Error while tweeting", to, error);
