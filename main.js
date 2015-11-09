@@ -63,7 +63,7 @@ var commands = {
 var prefix = conf['prefix'];
 
 client.addListener('message', function(from, to, text, message){
-  var cmdreg = new RegExp("(\\" + prefix + ')(\\w+)((\\s+\\w+)*)');
+  var cmdreg = new RegExp("(\\" + prefix + ')(\\w+)(.*)');
   parsedCommand = cmdreg.exec(text);
   if (parsedCommand && parsedCommand[1] === prefix && (parsedCommand[2] in commands)) {
     log.debug('Executing command ' + parsedCommand[2])
