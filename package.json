@@ -18,6 +18,7 @@
   "dependencies": {
     "bunyan": "^1.5.1",
     "irc": "^0.4.0",
-    "js-yaml": "^3.4.3"
+    "js-yaml": "^3.4.3",
+    "twit": "^2.1.1"
   }
 }
