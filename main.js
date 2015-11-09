@@ -23,6 +23,11 @@ var client = new irc.Client(conf['connection']['server'], conf['bot']['nick'], {
   channels: conf['connection']['channels']
 });
 
+function izanaError(msg, to, err) {
+  log.error(err);
+  client.say(to,msg);
+}
+
 /*
  twitter
 */
@@ -34,10 +39,10 @@ var anrainerkot = new twitter({
 });
 
 function commandAnrainerkot(from, to, text, message, args) {
+  log.info(args)
   anrainerkot.post('statuses/update', {status: args},  function(error, tweet, response){
     if(error) {
-      log.debug(error)
-      throw error;
+      izanaError("Error while tweeting", to, error);
     }
   });
 }
