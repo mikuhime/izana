@@ -75,10 +75,17 @@ client.addListener('message', function(from, to, text, message){
   treten
 */
 var treten = true;
+var nichtTreten = conf['treten']['nicht']
+var names = {}
+
+client.addListener('names', function(channel, nicks){
+  names[channel] = nicks;
+})
 
 client.addListener('action', function (from, to, text, message) {
   getreten = text.match(/tritt (\S*)\s*$/)
-  if (getreten && treten) {
+  if (getreten && treten && (getreten[1] in names[to]) && !~nichtTreten.indexOf(getreten[1])) {
+    log.debug('Trete ' + getreten[1] + ' zurück')
     client.action(to, getreten[0])
     treten = false
 
