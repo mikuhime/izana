@@ -46,7 +46,7 @@ function commandAnrainerkot(from, to, text, message, args) {
   });
 }
 
-var userstream = anrainerkot.stream('user',{ replies: 'all' });
+var userstream = anrainerkot.stream('user',{ with: 'user' });
 
 userstream.on('tweet', function(tweet) {
   client.say(conf['anrainerkot']['channel'], 'https://twitter.com/' + tweet['user']['screen_name'] + '/status/' + tweet['id_str'] + ' ' + tweet['text'])
